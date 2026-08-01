@@ -1,0 +1,19 @@
+# Virtual Environment
+.ERAvenv/
+
+# Environment Variables
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Vector Database
+db/
+
+# VS Code
+.vscode/
+
+# OS Files
+.DS_Store
+Thumbs.db
