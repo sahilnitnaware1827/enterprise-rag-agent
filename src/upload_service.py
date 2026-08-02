@@ -15,30 +15,34 @@ class UploadService:
         self.upload_dir = Path("data")
         self.upload_dir.mkdir(exist_ok=True)
 
-    def upload_pdf(self, file: UploadFile):
+    def upload_pdf(self, files: list[UploadFile]):
 
-        if file.content_type != "application/pdf":
-            raise ValueError('\n Only PDF Files are allowed ')
+        uploaded_files = []
 
-        if not file.filename:
-            raise ValueError("Filename is missing.")
+        for file in files:
 
+            if file.content_type != "application/pdf":
+                raise ValueError("Only PDF files are allowed.")
 
-        extension = Path(file.filename).suffix
+            if not file.filename:
+                raise ValueError("Filename is missing.")
 
-        filename = f"{uuid4()}{extension}"
+            extension = Path(file.filename).suffix
 
-        file_path = self.upload_dir / filename
+            filename = f"{uuid4()}{extension}"
 
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+            file_path = self.upload_dir / filename
 
-        pipeline = IngestionPipeline(pdf_path=str(file_path))
+            with open(file_path, "wb") as buffer:
+                shutil.copyfileobj(file.file, buffer)
 
-        pipeline.run()
+            pipeline = IngestionPipeline(pdf_path=str(file_path))
+            pipeline.run()
 
+            uploaded_files.append(file.filename)
 
         return {
-            "message": f"File '{file.filename}' uploaded and processed successfully."
+            "message": "Files uploaded and processed successfully.",
+            "files": uploaded_files
         }
     

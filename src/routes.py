@@ -33,13 +33,14 @@ def health():
 upload_service = UploadService()
 
 @router.post("/upload")
-def upload_files(file: UploadFile = File(...)):
+def upload_files(files: list[UploadFile] = File(...)):
 
     try:
 
-        return upload_service.upload_pdf(file)
+        return upload_service.upload_pdf(files)
 
     except ValueError as e:
+
         raise HTTPException(status_code=400, detail=str(e))
 
     
