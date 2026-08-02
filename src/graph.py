@@ -28,4 +28,5 @@ agent = create_agent(
     model = llm,
     tools = [search_tool],
     system_prompt= RAG_SYSTEM_PROMPT
+    checkpointer=memory
 )

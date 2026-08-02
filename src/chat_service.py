@@ -15,6 +15,11 @@ class ChatService:
                         "content": question
                     }
                 ]
+            },
+            config={
+                "configurable": {
+                    "thread_id": "user-1"
+                }
             }
         )
 
