@@ -8,6 +8,7 @@ from src.vectorstore import VectorStore
 from src.retrieval import DocumentRetriever
 from src.tools import RAGTool
 from src.prompts import RAG_SYSTEM_PROMPT
+from src.memory import memory
 
 
 embedding = EmbeddingModel()
@@ -27,6 +28,6 @@ llm = LLM().get_model()
 agent = create_agent(
     model = llm,
     tools = [search_tool],
-    system_prompt= RAG_SYSTEM_PROMPT
+    system_prompt= RAG_SYSTEM_PROMPT,
     checkpointer=memory
 )
