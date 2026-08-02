@@ -17,3 +17,11 @@ class VectorStore:
 
     def save(self, vectorstore, path= 'db'):
         vectorstore.save_local(path)
+
+    def load(self, path= 'db'):
+        return FAISS.load_local(
+            folder_path = path,
+            embeddings = self.embedding_model,
+            allow_dangerous_deserialization = True
+        )
+    
