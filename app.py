@@ -1,6 +1,7 @@
 # Create entry point 
 
 from fastapi import FastAPI
+from src.routes import router
 
 app = FastAPI(
     title = "Enterprise RAG Agent",
@@ -8,9 +9,4 @@ app = FastAPI(
     version = "0.1.0"
 )
 
-@app.get("/")
-def home():
-
-    return {
-        "Meassage": "Welcome to the Enterprise RAG Agent API"
-    }
+app.include_router(router)
