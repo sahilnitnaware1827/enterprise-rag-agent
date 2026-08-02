@@ -1,6 +1,8 @@
 # Create search tool to load documents from a PDF file, chunk the documents, embed the chunks, and store the embeddings in a vector database for retrieval.
 
+from pathlib import Path
 from langchain.tools import tool
+
 
 class RAGTool:
 
@@ -17,9 +19,29 @@ class RAGTool:
 
             docs = self.retriever.invoke(query)
 
-            return "\n\n".join(
-                doc.page_content for doc in docs
-            )
+            formatted_docs = []
+
+            for doc in docs:
+
+                source = Path(doc.metadata.get("source", "Unknown")).name
+
+                page = doc.metadata.get("page", "Unknown")
+
+                content = doc.page_content
+
+                formatted_docs.append(
+                    f"""
+                    Content:
+                    {content}
+
+                    Source:
+                    {source}
+
+                    Page:
+                    {page}"""
+                )
+
+            return "\n\n----------------\n\n".join(formatted_docs)
 
         return search_documents
         
